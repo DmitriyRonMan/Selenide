@@ -7,8 +7,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class SelenideTest {
 
@@ -69,4 +68,32 @@ public class SelenideTest {
         $("[data-test-id=notification] .notification__title").shouldBe(Condition.visible, Duration.ofSeconds(15));
         $("[data-test-id=notification] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + setLocalDate(365)));
     }
+
+    @Test
+    void shouldTestForSelectFromList() {
+        Configuration.holdBrowserOpen=true;
+        $("[data-test-id=city] .input__control").setValue("Ор");
+        $$(".menu-item__control").find(Condition.exactText("Оренбург")).click();
+        $("[data-test-id=date] .input__control").doubleClick().sendKeys(setLocalDate(3));
+        $("[data-test-id=name] .input__control").setValue("Пушкин Александр");
+        $("[data-test-id=phone] .input__control").setValue("+79878723624");
+        $("[data-test-id=agreement]").click();
+        $(".button__content").click();
+        $("[data-test-id=notification] .notification__title").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $("[data-test-id=notification] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + setLocalDate(3)));
+    }
+
+    //тест про календарь не для проверки, он не доделан.
+    /*@Test
+    void shouldTestForWeekAhead() {
+        $("[data-test-id=city] .input__control").setValue("Оренбург");
+        $("[data-test-id=date] button").click();
+        $(".popup__content").find()
+        $("[data-test-id=name] .input__control").setValue("Пушкин Александр");
+        $("[data-test-id=phone] .input__control").setValue("+79878723624");
+        $("[data-test-id=agreement]").click();
+        $(".button__content").click();
+        $("[data-test-id=notification] .notification__title").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $("[data-test-id=notification] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + setLocalDate(10)));
+    }*/
 }
