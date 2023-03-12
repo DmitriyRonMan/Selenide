@@ -71,7 +71,6 @@ public class SelenideTest {
 
     @Test
     void shouldTestForSelectFromList() {
-        Configuration.holdBrowserOpen=true;
         $("[data-test-id=city] .input__control").setValue("Ор");
         $$(".menu-item__control").find(Condition.exactText("Оренбург")).click();
         $("[data-test-id=date] .input__control").doubleClick().sendKeys(setLocalDate(3));
