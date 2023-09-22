@@ -23,6 +23,7 @@ public class SelenideTest {
 
     @Test
     void shouldTestForDay3() {
+        Configuration.holdBrowserOpen = true;
         $("[data-test-id=city] .input__control").setValue("Оренбург");
         $("[data-test-id=date] .input__control").doubleClick().sendKeys(setLocalDate(3));
         $("[data-test-id=name] .input__control").setValue("Пушкин Александр");
